@@ -9,7 +9,7 @@
 プロジェクトディレクトリで実行します。
 
 ```bash
-cd /home/animede/embeddinggemma-2
+cd /path/to/embeddinggemma-2
 python3 -m venv .venv
 .venv/bin/python -m pip install -r requirements.txt
 ```
