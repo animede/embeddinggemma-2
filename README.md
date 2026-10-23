@@ -51,20 +51,22 @@ CUDA_VISIBLE_DEVICES="" .venv/bin/python app.py --port 8001
 
 ### CLIで検索
 
+検索欄（`--query`）に語句を追記して再検索できます。
+
 ```bash
 .venv/bin/python app.py --query "東京の地下鉄"
+```
+
+さらに検索結果を絞り込む場合は、`--refine`を使います。`--query`の検索結果と`--refine`の語句の両方に該当するページを対象にします。
+
+```bash
+.venv/bin/python app.py --query "地下鉄" --refine "東京"
 ```
 
 記事タイトルで絞り込むこともできます。
 
 ```bash
 .venv/bin/python app.py --query "地下鉄" --title "東京"
-```
-
-検索結果をさらに語句で絞り込む場合は `--refine` を使います。
-
-```bash
-.venv/bin/python app.py --query "地下鉄" --refine "東京"
 ```
 
 検索時間もCLIに表示されます。
