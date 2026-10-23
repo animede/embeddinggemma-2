@@ -45,6 +45,12 @@ CUDA_VISIBLE_DEVICES="" .venv/bin/python app.py --port 8001
 
 ブラウザで <http://127.0.0.1:8001> を開きます。ポート8000が空いている場合は、`--port 8001`を`--port 8000`に変更できます。
 
+起動ポートは環境変数`PORT`でも変更できます。`--port`を指定した場合は、コマンドラインの指定が優先されます。
+
+```bash
+PORT=8001 .venv/bin/python app.py
+```
+
 ### Web画面で検索
 
 「検索語を入力」に検索語を入力して検索します。「結果をさらに絞り込む」欄に語句を入力すると、検索結果を追加条件で絞り込めます。「タイトルで絞り込み」では記事タイトルに含まれる文字列を指定できます。
@@ -93,7 +99,7 @@ curl 'http://127.0.0.1:8001/api/search?q=地下鉄&refine=東京&title=東京&li
 .venv/bin/python app.py --lexical-only --query "東京の地下鉄"
 ```
 
-環境変数 `WIKI_DB`、`EMBEDDING_MODEL`、`EMBEDDING_DIM`（128/256/512/768）で設定を変更できます。既定の256次元は検索速度と精度のバランスを取った設定です。
+環境変数 `WIKI_DB`、`EMBEDDING_MODEL`、`EMBEDDING_DIM`（128/256/512/768）、`PORT`で設定を変更できます。既定の256次元は検索速度と精度のバランスを取った設定です。
 
 ## ライセンス
 

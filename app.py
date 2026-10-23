@@ -20,6 +20,7 @@ MODEL_NAME = os.getenv("EMBEDDING_MODEL", "google/embeddinggemma-2")
 DB_PATH = Path(os.getenv("WIKI_DB", "data/jawiki.sqlite3"))
 MODEL_DIM = int(os.getenv("EMBEDDING_DIM", "256"))
 RERANK_TEXT_CHARS = int(os.getenv("RERANK_TEXT_CHARS", "2000"))
+DEFAULT_PORT = int(os.getenv("PORT", "8000"))
 
 
 class SearchEngine:
@@ -264,7 +265,7 @@ def main() -> int:
     parser.add_argument("--limit", type=int, default=10, help="表示する検索結果件数（1-50）")
     parser.add_argument("--lexical-only", action="store_true")
     parser.add_argument("--host", default="127.0.0.1")
-    parser.add_argument("--port", type=int, default=8000)
+    parser.add_argument("--port", type=int, default=DEFAULT_PORT, help="起動ポート（環境変数PORTでも指定可能）")
     args = parser.parse_args()
     if not 1 <= args.limit <= 50:
         parser.error("--limit は1〜50の範囲で指定してください")
