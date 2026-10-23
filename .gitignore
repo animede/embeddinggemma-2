@@ -1,0 +1,7 @@
+.venv/
+__pycache__/
+*.pyc
+data/*.bz2
+data/*.sqlite3
+data/*.sqlite3-*
+data/*.log

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mediawiki xmlns="http://www.mediawiki.org/xml/export-0.11/">
+  <page>
+    <title>東京</title>
+    <ns>0</ns>
+    <revision><text>'''東京'''は日本の首都です。[[地下鉄]]が発達しています。</text></revision>
+  </page>
+  <page>
+    <title>利用者:テスト</title>
+    <ns>2</ns>
+    <revision><text>これは除外されます。</text></revision>
+  </page>
+  <page>
+    <title>大阪</title>
+    <ns>0</ns>
+    <redirect title="関西" />
+    <revision><text>これはリダイレクトなので除外されます。</text></revision>
+  </page>
+</mediawiki>

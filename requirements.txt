@@ -1,0 +1,9 @@
+fastapi>=0.115
+uvicorn[standard]>=0.34
+sentence-transformers>=5.1
+transformers>=4.57
+torch>=2.6
+torchvision>=0.29
+lxml>=5.3
+mwparserfromhell>=0.6.6
+pillow>=10.0
