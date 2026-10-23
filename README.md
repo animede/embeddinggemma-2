@@ -94,3 +94,7 @@ curl 'http://127.0.0.1:8001/api/search?q=地下鉄&refine=東京&title=東京&li
 ```
 
 環境変数 `WIKI_DB`、`EMBEDDING_MODEL`、`EMBEDDING_DIM`（128/256/512/768）で設定を変更できます。既定の256次元は検索速度と精度のバランスを取った設定です。
+
+## ライセンス
+
+コードは [MIT License](LICENSE) で公開しています。
