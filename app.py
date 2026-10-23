@@ -231,9 +231,10 @@ def make_app(engine: SearchEngine) -> FastAPI:
         }
 
     @app.get("/", response_class=HTMLResponse)
-    def index(q: str = "", title: str = "", refine: str = "") -> str:
+    def index(q: str = "", title: str = "", refine: str = "", limit: int = 10) -> str:
+        limit = max(1, min(limit, 50))
         results, elapsed_ms = (
-            engine.search_timed(q, limit=10, title_contains=title, refine=refine)
+            engine.search_timed(q, limit=limit, title_contains=title, refine=refine)
             if q.strip()
             else ([], 0.0)
         )
@@ -247,7 +248,7 @@ def make_app(engine: SearchEngine) -> FastAPI:
 <title>日本語Wikipedia高速検索</title>
 <style>body{{font-family:system-ui,sans-serif;max-width:960px;margin:40px auto;padding:0 20px;background:#f7f7f8;color:#222}}form{{display:flex;gap:8px}}input{{flex:1;font-size:1.1rem;padding:12px;border:1px solid #bbb;border-radius:8px}}button{{padding:0 20px;border:0;border-radius:8px;background:#2563eb;color:white;font-size:1rem}}article{{background:white;border-radius:10px;padding:16px 20px;margin:14px 0;box-shadow:0 1px 3px #ddd}}h2{{margin:0 0 8px;font-size:1.2rem}}a{{color:#1558b0}}p{{line-height:1.7;margin:8px 0}}small{{color:#777}}.elapsed{{color:#666;font-size:.9rem}}</style>
 <h1>日本語Wikipedia検索</h1>
-<form><input name="q" value="{html.escape(q)}" placeholder="検索語を入力" autofocus><input name="refine" value="{html.escape(refine)}" placeholder="結果をさらに絞り込む（任意）"><input name="title" value="{html.escape(title)}" placeholder="タイトルで絞り込み（任意）"><button>検索</button></form>
+<form><input name="q" value="{html.escape(q)}" placeholder="検索語を入力" autofocus><input name="refine" value="{html.escape(refine)}" placeholder="結果をさらに絞り込む（任意）"><input name="title" value="{html.escape(title)}" placeholder="タイトルで絞り込み（任意）"><input name="limit" type="number" min="1" max="50" value="{limit}" title="表示件数"><button>検索</button></form>
 {f'<p class="elapsed">検索時間: {elapsed_ms:.2f} ms（{len(results)}件表示）</p>' if q.strip() else ''}
 {items or ('<p>検索語を入力してください。</p>' if not q else '<p>結果が見つかりませんでした。</p>')}
 </html>"""
@@ -260,14 +261,17 @@ def main() -> int:
     parser.add_argument("--query")
     parser.add_argument("--title", default="", help="記事タイトルに含める文字列")
     parser.add_argument("--refine", default="", help="結果をさらに絞り込む語句")
+    parser.add_argument("--limit", type=int, default=10, help="表示する検索結果件数（1-50）")
     parser.add_argument("--lexical-only", action="store_true")
     parser.add_argument("--host", default="127.0.0.1")
     parser.add_argument("--port", type=int, default=8000)
     args = parser.parse_args()
+    if not 1 <= args.limit <= 50:
+        parser.error("--limit は1〜50の範囲で指定してください")
     engine = SearchEngine(DB_PATH, use_model=not args.lexical_only)
     if args.query:
         results, elapsed_ms = engine.search_timed(
-            args.query, title_contains=args.title, refine=args.refine
+            args.query, limit=args.limit, title_contains=args.title, refine=args.refine
         )
         print(f"検索時間: {elapsed_ms:.2f} ms")
         for result in results:

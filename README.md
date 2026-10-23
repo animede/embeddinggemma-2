@@ -63,6 +63,12 @@ CUDA_VISIBLE_DEVICES="" .venv/bin/python app.py --port 8001
 .venv/bin/python app.py --query "地下鉄" --refine "東京"
 ```
 
+表示件数は`--limit`で指定できます（1〜50件）。
+
+```bash
+.venv/bin/python app.py --query "地下鉄" --refine "東京" --limit 20
+```
+
 記事タイトルで絞り込むこともできます。
 
 ```bash
@@ -76,10 +82,10 @@ CUDA_VISIBLE_DEVICES="" .venv/bin/python app.py --port 8001
 起動中のサーバーに対して、次のように検索できます。
 
 ```bash
-curl 'http://127.0.0.1:8001/api/search?q=地下鉄&refine=東京&title=東京&limit=10'
+curl 'http://127.0.0.1:8001/api/search?q=地下鉄&refine=東京&title=東京&limit=20'
 ```
 
-レスポンスには`results`と`elapsed_ms`（検索時間、ミリ秒）が含まれます。
+レスポンスには`results`と`elapsed_ms`（検索時間、ミリ秒）が含まれます。Web画面にも表示件数の入力欄があります。
 
 モデルを使わず、SQLite FTS5だけで確認する場合:
 
